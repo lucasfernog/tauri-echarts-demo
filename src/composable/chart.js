@@ -1,10 +1,10 @@
 import * as echarts from 'echarts';
+import { convertFileSrc } from '@tauri-apps/api/tauri';
 
 export function mountChart(element) {
   const myChart = echarts.init(element);
 
-  // const dataURL = 'https://plot.localhost/fake-nebula.bin';
-  const dataURL = 'plot://fake-nebula.bin';
+  const dataURL = convertFileSrc('fake-nebula.bin', 'plot');
 
   myChart.showLoading();
 
