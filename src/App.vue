@@ -5,8 +5,8 @@ import { mountChart, updateChart } from './composable/chart.js';
 export default {
   name: 'Chart Demo',
   setup() {
-    const refreshSpeed = ref(60);
-    const numberOfPoints = ref(2_000_000);
+    const refreshSpeed = ref(120);
+    const numberOfPoints = ref(2_000);
     const running = ref(true);
 
     function start() {

@@ -14,7 +14,7 @@ fn main() {
     let last_points = Mutex::new(HashMap::<String, usize>::new());
 
     tauri::Builder::default()
-        .register_uri_scheme_protocol("plot", move |app, req| {
+        .register_uri_scheme_protocol("plot", move |_app, req| {
             use tauri::http::ResponseBuilder;
 
             let url = url::Url::parse(req.uri()).unwrap();
