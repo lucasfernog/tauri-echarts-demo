@@ -1,10 +1,10 @@
 import * as echarts from 'echarts';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
 
-export function mountChart(element) {
+export function mountChart(element, points) {
   const myChart = echarts.init(element);
 
-  const dataURL = convertFileSrc('fake-nebula.bin', 'plot');
+  const dataURL = convertFileSrc('fake-nebula.bin', 'plot') + `?points=${points}`;
 
   myChart.showLoading();
 
@@ -18,7 +18,7 @@ export function mountChart(element) {
       title: {
         left: 'center',
         text:
-          echarts.format.addCommas(Math.round(rawData.length)) + ' Points',
+          echarts.format.addCommas(Math.round(rawData.length / 2)) + ' Points',
         subtext: 'Fake data',
       },
       tooltip: {},
@@ -83,15 +83,15 @@ export function mountChart(element) {
 
 export function updateChart(myChart, points) {
 
-  const dataURL = convertFileSrc('fake-nebula.bin', 'plot');
+  const dataURL = convertFileSrc('fake-nebula.bin', 'plot') + `?points=${points}`;
 
   fetch(dataURL).then(r => r.arrayBuffer()).then(data =>{
-    const rawData = new Float32Array(data).slice(0, points);
-    console.log('update', rawData.length)
+    const rawData = new Float32Array(data);
+    console.log('update', rawData.length);
 
     const option = {
       title: {
-        text: echarts.format.addCommas(Math.round(rawData.length)) + ' Points',
+        text: echarts.format.addCommas(Math.round(rawData.length / 2)) + ' Points',
       },
       series: [
         {

@@ -18,7 +18,7 @@ export default {
     }
 
     onMounted(() => {
-      const myChart = mountChart(document.getElementById('main'));
+      const myChart = mountChart(document.getElementById('main'), numberOfPoints.value);
 
       window.onresize = () => {
         myChart.resize();
