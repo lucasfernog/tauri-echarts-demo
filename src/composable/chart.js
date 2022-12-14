@@ -18,8 +18,7 @@ export function mountChart(element) {
       title: {
         left: 'center',
         text:
-          echarts.format.addCommas(Math.round(rawData.length / 2)) +
-          ' Points',
+          echarts.format.addCommas(Math.round(rawData.length)) + ' Points',
         subtext: 'Fake data',
       },
       tooltip: {},
@@ -82,14 +81,18 @@ export function mountChart(element) {
   return myChart;
 }
 
-export function updateChart(myChart) {
+export function updateChart(myChart, points) {
 
-  const dataURL = 'https://plot.localhost/fake-nebula.bin';
+  const dataURL = convertFileSrc('fake-nebula.bin', 'plot');
 
   fetch(dataURL).then(r => r.arrayBuffer()).then(data =>{
-    const rawData = new Float32Array(data);
+    const rawData = new Float32Array(data).slice(0, points);
+    console.log('update', rawData.length)
 
     const option = {
+      title: {
+        text: echarts.format.addCommas(Math.round(rawData.length)) + ' Points',
+      },
       series: [
         {
           type: 'scatter',
